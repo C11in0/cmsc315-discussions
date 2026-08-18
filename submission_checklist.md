@@ -26,7 +26,7 @@ Use this checklist before submitting your weekly discussion.
 ## GitHub Checklist
 - [x] My weekly folder contains the Python file.
 - [x] My weekly folder contains an updated README.
-- [ ] My GitHub repository is organized and readable.
+- [x] My GitHub repository is organized and readable.
 
 ## Discussion Checklist
 - [x] I explained my design approach in the initial post of the discussion board.
