@@ -25,7 +25,14 @@ from copy import copy, deepcopy
 # Replace the pass statement with your implementation.
 
 class ParentClass:
-    pass
+    category = "General Equipment"
+
+    def __init__(self, name, quantity):
+        self.name = name
+        self.quantity = quantity
+
+    def display_info(self):
+        return f"Item: {self.name}, Quantity: {self.quantity}, Category: {self.category}"
 
 
 # TODO 2:
@@ -41,7 +48,26 @@ class ParentClass:
 # Replace the pass statement with your implementation.
 
 class ChildClass(ParentClass):
-    pass
+    item_type = "Training Equipment"
+
+    def __init__(self, name, quantity, location, condition):
+        super().__init__(name, quantity)
+        self.location = location
+        self.condition = condition
+
+    def display_location(self):
+        return f"{self.name} is located at {self.location}"
+
+    def check_stock(self):
+        if self.quantity < 10:
+            return f"{self.name} is low on stock."
+        else:
+            return f"{self.name} has sufficient stock."
+
+    def display_info(self):
+        return (f"Item: {self.name}, Quantity: {self.quantity}, "
+                f"Category: {self.category}, Type: {self.item_type}, "
+                f"Location: {self.location}, Condition: {self.condition}")
 
 
 # TODO 3:
@@ -57,7 +83,26 @@ class ChildClass(ParentClass):
 
 def demonstrate_namespaces():
     print("\n=== Namespace Demonstration ===")
-    print("TODO: Implement namespace demonstration")
+
+    item1 = ChildClass("Water Can", 10, "Warehouse A", "Serviceable")
+    item2 = ChildClass("Tent", 5, "Warehouse B", "Serviceable")
+
+    # Access the class variable through the class itself.
+    print("Class variable through class:", ChildClass.item_type)
+
+    # Access the same class variable through an object.
+    print("Class variable through object:", item1.item_type)
+
+    # Add an attribute to only item1.
+    item1.serial_number = "WC001"
+
+    # Display each object's instance namespace.
+    print("Item 1 namespace:", item1.__dict__)
+    print("Item 2 namespace:", item2.__dict__)
+
+    # Display information from the class namespace.
+    print("Child class namespace:", ChildClass.__dict__)
+
 
 
 # TODO 4:
@@ -73,7 +118,26 @@ def demonstrate_namespaces():
 
 def demonstrate_copying():
     print("\n=== Copy Demonstration ===")
-    print("TODO: Implement shallow copy and deep copy demonstration")
+
+    original = {
+        "item": "Water Can",
+        "locations": ["Warehouse A", "Training Area"]
+    }
+
+    shallow = copy(original)
+    deep = deepcopy(original)
+
+    # Modify the nested list in the original object.
+    original["locations"].append("Supply Room")
+
+    # A shallow copy shares nested objects with the original,
+    # so the new location will also appear in shallow.
+    print("Original:", original)
+    print("Shallow copy:", shallow)
+
+    # A deep copy creates an independent copy of nested objects,
+    # so the new location will not appear in deep.
+    print("Deep copy:", deep)
 
 
 # TODO 5:
@@ -89,12 +153,27 @@ def demonstrate_copying():
 def main():
     print("=== Unit 1 OOP Assignment ===")
 
-    print("\nTODO: Create and test your parent object")
+    # Create and test a parent object.
+    print("\n=== Parent Object ===")
+    parent_item = ParentClass("Water Can", 10)
+    print(parent_item.display_info())
 
-    print("\nTODO: Create and test your child object")
+    # Create and test a child object.
+    print("\n=== Child Object ===")
+    child_item = ChildClass("Tent", 5, "Warehouse B", "Serviceable")
+    print(child_item.display_info())
+    print(child_item.display_location())
+    print(child_item.check_stock())
+    # Test an edge case with zero inventory.
+    print("\n=== Edge Case: Zero Inventory ===")
+    empty_item = ChildClass("Sleeping Bag", 0, "Warehouse A", "Serviceable")
+    print(empty_item.display_info())
+    print(empty_item.check_stock())
 
+    # Demonstrate namespaces and copying.
     demonstrate_namespaces()
     demonstrate_copying()
+
 
 
 if __name__ == "__main__":
