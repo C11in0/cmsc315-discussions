@@ -28,3 +28,15 @@ Your reflection should be approximately 150–200 words and address the followin
 1. What concepts or skills did you learn while completing this assignment?
 2. What challenges did you encounter, and how did you overcome them?
 3. How do list operations impact performance in real-world applications?
+
+## Implementation Summary
+
+I created list operations to insert, delete, and search through items using a real-world inventory scenario. I inserted inventory items at the beginning, middle, and end of a Python list. When an item was inserted, the elements following that index shifted to accommodate the new item.
+
+I implemented deletion using `pop()` and validated the index before deleting so that an invalid index returned `None` instead of causing the program to crash. I also deleted items from the beginning, middle, and end of the list.
+
+I implemented searching using a linear search that checked each element sequentially until it found the requested inventory item. When the item was found, its index was returned. When the item was not found, the search returned `-1`.
+
+## Real-World Application
+
+I used an inventory system as the real-world scenario for this assignment. A list can be used to store products or equipment in inventory. New items can be added, existing items can be removed, and the list can be searched to determine whether a particular item is in stock.
