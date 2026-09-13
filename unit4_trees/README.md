@@ -22,7 +22,6 @@ This assignment introduces Binary Search Trees (BSTs) and recursive tree operati
 6. Create a real-world BST example.
 
 ## Implementation Summary
-## Implementation Summary
 
 I implemented a Binary Search Tree using a Node class and a BST class. Each node stored a value along with references to its left and right child nodes.
 
