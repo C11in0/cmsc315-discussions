@@ -33,7 +33,48 @@ def bfs(graph, start):
     - How BFS differs from depth-first traversal.
     """
 
-    pass
+    # If the starting node is not in the graph,
+    # return an empty list so the program does not crash.
+    if start not in graph:
+        return []
+
+    # A queue is used because BFS visits nodes in the order
+    # they are discovered, which allows it to move level by level.
+    queue = deque([start])
+
+    # The visited set prevents the same node from being processed
+    # more than once.
+    visited = {start}
+
+    # This list stores the order in which nodes are visited.
+    traversal_order = []
+
+    # Continue until there are no more nodes left in the queue.
+    while queue:
+
+        # Remove the node at the front of the queue.
+        current = queue.popleft()
+
+        # Add the current node to the traversal result.
+        traversal_order.append(current)
+
+        # Check each neighbor connected to the current node.
+        for neighbor in graph[current]:
+
+            # Only add neighbors that have not already been visited.
+            if neighbor not in visited:
+
+                # Mark the neighbor as visited before adding it
+                # to the queue so it is not added multiple times.
+                visited.add(neighbor)
+
+                # Neighbors are added to the end of the queue
+                # so BFS processes them in discovery order.
+                queue.append(neighbor)
+
+    # BFS explores nearby nodes first, while depth-first search
+    # follows one path as far as possible before backtracking.
+    return traversal_order
 
 
 def main():
@@ -50,8 +91,24 @@ def main():
     # 4. Clearly display the graph structure.
     # 5. Use comments to explain what the nodes and edges represent.
 
+    # This graph represents buildings on a college campus.
+    # Each key is a building, which represents a node.
+    # Each value contains the buildings directly connected to it.
+    # The connections represent walking paths between buildings.
+    graph = {
+        "Library": ["Science Hall", "Student Center"],
+        "Science Hall": ["Library", "Engineering Hall", "Gym"],
+        "Student Center": ["Library", "Cafeteria"],
+        "Engineering Hall": ["Science Hall", "Cafeteria"],
+        "Gym": ["Science Hall"],
+        "Cafeteria": ["Student Center", "Engineering Hall"]
+    }
+
     print("\n=== GRAPH STRUCTURE ===")
-    print("TODO: Create and display a graph.")
+
+    # Display each building and its direct connections.
+    for building, neighbors in graph.items():
+        print(f"{building}: {neighbors}")
 
     # ===============================
     # TODO (Student): BFS TRAVERSAL
@@ -66,7 +123,25 @@ def main():
     #    and demonstrate the updated traversal.
 
     print("\n=== BFS TRAVERSAL ===")
-    print("TODO: Perform and explain BFS traversal.")
+
+    start_node = "Library"
+
+    # BFS begins at the Library and then visits its direct neighbors.
+    # After that, it visits nodes connected to those neighbors.
+    traversal = bfs(graph, start_node)
+
+    print(f"Starting node: {start_node}")
+    print("BFS traversal order:", traversal)
+
+    # Add a new building to demonstrate how the graph can change.
+    graph["Dormitory"] = ["Gym"]
+
+    # Because the graph represents walking paths, add the
+    # connection from Gym back to Dormitory as well.
+    graph["Gym"].append("Dormitory")
+
+    print("\nAdded new building: Dormitory")
+    print("Updated BFS traversal:", bfs(graph, start_node))
 
     # ===============================
     # TODO (Student): EDGE CASES
@@ -84,8 +159,26 @@ def main():
     # Explain what happens in each case.
 
     print("\n=== EDGE CASE TESTS ===")
-    print("TODO: Demonstrate and explain edge cases.")
 
+    # Edge Case 1:
+    # Start from a node that does not exist.
+    # The BFS function returns an empty list instead of crashing.
+    print("\nEdge Case 1 - Missing start node:")
+    print(bfs(graph, "Parking Garage"))
+
+    # Edge Case 2:
+    # A graph with only one node should simply return that node.
+    single_node_graph = {
+        "Library": []
+    }
+
+    print("\nEdge Case 2 - Single-node graph:")
+    print(bfs(single_node_graph, "Library"))
+
+    # Edge Case 3:
+    # Starting from a different building changes the traversal order.
+    print("\nEdge Case 3 - Different starting node:")
+    print(bfs(graph, "Gym"))
 
 
 if __name__ == "__main__":
